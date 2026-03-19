@@ -1,0 +1,8 @@
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    PROJECT_NAME: str = "PEÑA API"
+    API_V1_STR: str = "/api/v1"
+    DATA_DIR: str = "data/posts"
+
+settings = Settings()

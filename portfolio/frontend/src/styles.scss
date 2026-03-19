@@ -1,0 +1,177 @@
+// ============================================================
+// GLOBAL DESIGN SYSTEM — Dark Mode + Glassmorphism
+// ============================================================
+
+// --- Design Tokens ---
+:root {
+  // Palette
+  --color-bg-primary:    hsl(225, 25%, 6%);
+  --color-bg-secondary:  hsl(225, 20%, 10%);
+  --color-bg-elevated:   hsl(225, 18%, 14%);
+  --color-surface:       hsla(225, 18%, 18%, 0.45);
+
+  // Glass
+  --glass-bg:            hsla(225, 20%, 14%, 0.35);
+  --glass-border:        hsla(225, 30%, 50%, 0.12);
+  --glass-shadow:        0 8px 32px hsla(0, 0%, 0%, 0.4);
+  --glass-blur:          16px;
+
+  // Accent
+  --accent-primary:      hsl(265, 85%, 65%);      // Electric Purple
+  --accent-secondary:    hsl(195, 100%, 55%);     // Neon Cyan
+  --accent-gradient:     linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  --accent-glow:         0 0 20px hsla(265, 85%, 65%, 0.30);
+
+  // Text
+  --text-primary:        hsl(225, 15%, 92%);
+  --text-secondary:      hsl(225, 12%, 60%);
+  --text-muted:          hsl(225, 10%, 40%);
+  --text-accent:         var(--accent-secondary);
+
+  // Typography
+  --font-sans:           'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:           'JetBrains Mono', 'Fira Code', monospace;
+
+  // Spacing
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  // Borders
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-full: 9999px;
+
+  // Transitions
+  --ease-smooth:   cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:  150ms;
+  --duration-base:  300ms;
+  --duration-slow:  500ms;
+
+  // Layout
+  --max-width: 1200px;
+  --nav-height: 72px;
+}
+
+// --- CSS Reset ---
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--text-accent);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-smooth);
+  &:hover { color: var(--accent-primary); }
+}
+
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; }
+
+// --- Utility Classes ---
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+}
+
+.accent-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+// --- Animated Background Orbs ---
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    animation: orbFloat 20s infinite ease-in-out;
+  }
+
+  &::before {
+    width: 600px;
+    height: 600px;
+    background: var(--accent-primary);
+    top: -10%;
+    left: -5%;
+  }
+
+  &::after {
+    width: 500px;
+    height: 500px;
+    background: var(--accent-secondary);
+    bottom: -10%;
+    right: -5%;
+    animation-delay: -10s;
+    animation-direction: reverse;
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(60px, -40px) scale(1.1); }
+  66%      { transform: translate(-40px, 60px) scale(0.95); }
+}
+
+// --- Scrollbar ---
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: hsla(225, 20%, 40%, 0.4);
+  border-radius: var(--radius-full);
+  &:hover { background: hsla(225, 20%, 50%, 0.6); }
+}
+
+// --- Selection ---
+::selection {
+  background: hsla(265, 85%, 65%, 0.3);
+  color: var(--text-primary);
+}

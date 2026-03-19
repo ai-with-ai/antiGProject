@@ -1,0 +1,49 @@
+<section class="cv-page" id="cv-section">
+  <div class="container">
+    <div class="cv-header">
+      <h1 class="section-title">
+        Interactive <span class="accent-text">CV</span>
+      </h1>
+      <p class="cv-subtitle">A journey through my professional experience and education.</p>
+      <button class="btn btn--primary" (click)="downloadCv()" id="cv-download-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+        <span>Download PDF</span>
+      </button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline" id="cv-timeline">
+      @for (entry of timeline; track entry.year; let i = $index) {
+        <div
+          class="timeline__item"
+          [class.timeline__item--expanded]="expandedIndex() === i"
+          [class.timeline__item--left]="i % 2 === 0"
+          [class.timeline__item--right]="i % 2 !== 0"
+        >
+          <div class="timeline__dot" (click)="toggleEntry(i)">
+            <span class="timeline__dot-inner"></span>
+          </div>
+
+          <div class="timeline__card glass-panel" (click)="toggleEntry(i)" [id]="'timeline-card-' + i">
+            <span class="timeline__year">{{ entry.year }}</span>
+            <h3 class="timeline__title">{{ entry.title }}</h3>
+            <p class="timeline__company">{{ entry.company }}</p>
+
+            @if (expandedIndex() === i) {
+              <div class="timeline__details">
+                <p class="timeline__desc">{{ entry.description }}</p>
+                <div class="timeline__tags">
+                  @for (tag of entry.tags; track tag) {
+                    <span class="timeline__tag">{{ tag }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

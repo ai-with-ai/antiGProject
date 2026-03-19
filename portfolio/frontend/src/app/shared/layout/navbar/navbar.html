@@ -1,0 +1,60 @@
+<nav class="navbar glass-panel" id="main-nav">
+  <div class="navbar__inner container">
+    <!-- Logo -->
+    <a routerLink="/" class="navbar__logo" (click)="closeMobile()" id="nav-logo">
+      <span class="navbar__logo-icon">⚡</span>
+      <span class="navbar__logo-text">CEP<span class="accent-text">.dev</span></span>
+    </a>
+
+    <!-- Desktop Links -->
+    <ul class="navbar__links" id="nav-links-desktop">
+      @for (link of navLinks; track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            class="navbar__link"
+            [id]="'nav-' + link.label.toLowerCase()"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="navbar__burger"
+      (click)="toggleMobile()"
+      [attr.aria-expanded]="mobileOpen()"
+      aria-label="Toggle navigation"
+      id="nav-burger"
+    >
+      <span class="navbar__burger-line" [class.open]="mobileOpen()"></span>
+      <span class="navbar__burger-line" [class.open]="mobileOpen()"></span>
+      <span class="navbar__burger-line" [class.open]="mobileOpen()"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (mobileOpen()) {
+    <div class="navbar__mobile glass-panel" id="nav-mobile-menu">
+      <ul>
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+              class="navbar__mobile-link"
+              (click)="closeMobile()"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</nav>
